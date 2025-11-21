@@ -1,0 +1,70 @@
+from random import *
+
+class Voiture:
+    def __init__(self,immatriculation:str, marque:str, proprietere:str):
+        self.immatriculation = immatriculation
+        self.marque = marque
+        self.proprietaire = proprietere
+        self.abone = False
+        self.place = ""
+
+    """def abonner(self):
+        if self.abone == False"""
+
+class Parking:
+    def __init__(self):
+        self.niveau = "0"
+        self.voitures = []
+        self.voiture = ""
+        self.place_occupees = []
+
+    def get_immatriculation(self, voiture):
+        return voiture.immatriculation
+    
+    def get_marque(self, voiture):
+        return voiture.marque
+    
+    def get_proprietere(self, voiture):
+        return voiture.proprietaire
+    
+    def get_abonee(self, voiture):
+        return voiture.abone
+    
+    def get_num_place(self, voiture):
+        return voiture.place
+    
+    def placer(self, voiture):
+        self.place = random.randint(0,80)
+        self.etage = random.randint(0,4)
+        self.place_etage = self.place + (self.etage*100)
+        self.place_occupees.append(self.place_etage)
+        voiture.place = self.place_etage
+
+    def place_libre(self):
+        for i in self.place_occupees:
+            return i == self.place_etage
+        
+    def place_occupee_voiture(self):
+        for i in self.place_occupees:
+            if i == self.place_etage:
+                return self.get_immatriculation()
+            
+    def liste_place_abonnee(self):
+        return self.place_occupees
+    
+    def places_libres_sans_abonnement(self):
+        self.places = []
+        self.place_liste = 1
+        self.niveau_liste = 0
+        for i in range(5):
+            for j in range(80):
+                self.places.append(self.niveau_liste+self.niveau_liste)
+                self.place_liste += 1
+            self.niveau_liste += 100
+            self.place_liste = 1
+        for i in self.place_occupees:
+            self.places.remove(i)
+        return self.places
+    
+    def representer_niveau(self):
+        return self.niveau_liste
