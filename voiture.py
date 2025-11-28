@@ -1,106 +1,82 @@
 import random
+
 class Voiture:
-    def __init__(self, immatriculation:str, marque:str, proprietaire:str ):
+    def __init__(self, immatriculation: str, marque: str, proprietaire: str):
         self.immatriculation = immatriculation
         self.marque = marque
         self.proprietaire = proprietaire
         self.abone = False
         self.place = ""
-    
-    
-    def immatriculation(self):
-        return self.immatriculation
-    
-    def marque(self):
-        return self.marque
-    
-    def proprietaire(self):
-        return self.proprietere
-    
-    def abone(self):
-        return self.abone
-    
-    def num_place(self):
-        return self.place 
-
-    
 
 
 class Parking:
-    def __init__ (self ):
+    def __init__(self):
         self.niveau = "0"
-        self.voitures = []
-        self.voiture = ""
-        self.places_occupees = []
+        self.voitures = []          # les voitures dans parking
+        self.places_occupees = []   # liste des plaves occupées
 
-
-    def get_immatriculation(self, voiture): #marche
-        """méthode pour afficher mmatriculation"""
+    def get_immatriculation(self, voiture):  # marche
+        """méthode pour afficher immatriculation"""
         return voiture.immatriculation
-    
-    def get_marque(self, voiture): #marche
+
+    def get_marque(self, voiture):  # marche
         return voiture.marque
-    
-    def get_proprietere(self, voiture): #marche
+
+    def get_proprietere(self, voiture):  # marche
         return voiture.proprietaire
-    
-    def est_abonee(self, voiture): #marhce
-        return voiture.abone 
-    
-    def get_num_place(self, voiture): #marche
-        return voiture.place 
-    
-    def abonner(self, voiture: Voiture): #marche
-        """méthode qui permett d'abonner ou d'annuler un abonnement """
+
+    def est_abonee(self, voiture):  # marche
+        return voiture.abone
+
+    def get_num_place(self, voiture):  # marche
+        return voiture.place
+
+    def abonner(self, voiture: Voiture):  # marche
+        """méthode qui permet d'abonner ou d'annuler un abonnement"""
         if self.est_abonee(voiture):
             voiture.abone = False
             print("abonnement annulé")
-        else: 
+        else:
             voiture.abone = True
             print("abonné")
 
-    def placer(self, voiture): #marche 
-        val = random.randint(0, 80)
-        self.place = val
-        self.etage = random.randint(0, 4)
-        self.place_etage = self.place + (self.etage*100)
-        self.places_occupees.append(self.place_etage)
-        voiture.place = self.place_etage
+    def placer(self, voiture):  # marche
+        # si la voiture est pa dans a liste, on l'ajoute
+        if voiture not in self.voitures:
+            self.voitures.append(voiture)
 
-    
-    def place_occupee_voiture(self):
-        for i in self.place_occupees:
-            if i == self.place_etage:
-                return self.get_immatriculation()
-            
-    def liste_place_abonnee(self):
-        return self.place_occupees
+        place = random.randint(1, 80)      # numero de place
+        etage = random.randint(0, 4)       # etage
+        place_etage = place + (etage * 100)
 
-    """
-    def place_libre(self):
-        place_libre = []
-        for i in self.places_occupees:
-            if i == self.place_etage:
-                return 
-    """
-            
-    def places_libres_sans_abonnement(self):
-        self.places = []
-        self.place_liste = 1
-        self.niveau_liste = 0
-        for i in range(5):
-            for j in range(80):
-                self.places.append(self.niveau_liste+self.niveau_liste)
-                self.place_liste += 1
-            self.niveau_liste += 100
-            self.place_liste = 1
-        for i in self.place_occupees:
-            self.places.remove(i)
-        return self.places
-    
-    def representer_niveau(self):
-        return self.niveau_liste
         
+        self.places_occupees.append(place_etage)
+        voiture.place = place_etage
+
+    def place_occupee_voiture(self):
+        resultats = []
+        for v in self.voitures:
+            if v.place != "":
+                resultats.append((v.immatriculation, v.place))
+        return resultats
+
+    def liste_place_abonnee(self):
+        return self.places_occupees
+
+    def places_libres_sans_abonnement(self):
+        toutes_les_places = []
+        for etage in range(5):          # 0–4
+            for num in range(1, 81):    # 1–80
+                toutes_les_places.append(num + etage * 100)
+
+        # on enleve les ocupées
+        places_libres = []
+        for p in toutes_les_places:
+            if p not in self.places_occupees:
+                places_libres.append(p)
+
+        return places_libres
+
         
 
 voiture1 = Voiture("AA-001-AA", "BMW", "M. Informatique")
@@ -118,9 +94,20 @@ print(parking.get_immatriculation(voiture1))
 print(parking.get_immatriculation(voiture2))
 print(parking.get_proprietere(voiture1))
 """
+"""
 print(parking.est_abonee(voiture1))
 parking.abonner(voiture1)
 parking.abonner(voiture1)
+"""
+print("Places occupées (immatriculation, place):")
+print(parking.place_occupee_voiture())
+
+print("Liste des places occupées :")
+print(parking.liste_place_abonnee())
+
+print("Place de la voiture 1:", parking.get_num_place(voiture1))
+print("Place de la voiture 2:", parking.get_num_place(voiture2))
+
 
         
     
