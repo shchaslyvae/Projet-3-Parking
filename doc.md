@@ -1,10 +1,7 @@
-# Fonction Voiture
 
-A être complété
+# Class Parking
 
-# Fonction Parking
-
-J'ai crée plusieurs méthodes pour repésenter le parking :
+ Méthodes pour repésenter le parking :
 
 - ```__init__``` : Initialise le niveau, les voitures et les places occupées
 - ```get_immatriculation``` : renvoie l'immatriculation de la voiture
